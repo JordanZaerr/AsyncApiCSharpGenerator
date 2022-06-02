@@ -4,7 +4,7 @@ import { normalizeSchemaName } from '../helpers/normalizeSchemaName';
 const parserSchemaExt = 'x-parser-schema-id';
 const enumNamesExt = 'x-enumNames';
 
-export default function({ asyncapi }) {
+export default function({ asyncapi, params }) {
   const schemas = asyncapi.allSchemas();
   // schemas is an instance of the Map
   return Array
@@ -14,18 +14,18 @@ export default function({ asyncapi }) {
       const name = normalizeSchemaName(schemaName);
       return (
         <File name={`${name}.cs`}>
-          <CreateFile schemaName={schemaName} schema={schema} />
+          <CreateFile schemaName={schemaName} schema={schema} namespace={params.namespace} />
         </File>
       );
     });
 }
 
-function CreateFile({schemaName, schema}) {
-  if (schema.hasExtension(enumNamesExt)) return EnumFile(schemaName,schema);
-  return ClassFile(schemaName, schema);
+function CreateFile({schemaName, schema, namespace}) {
+  if (schema.hasExtension(enumNamesExt)) return EnumFile(schemaName,schema, namespace);
+  return ClassFile(schemaName, schema, namespace);
 }
 
-function ClassFile(schemaName, schema) {
+function ClassFile(schemaName, schema, namespace) {
   const propOutput = [];
   const properties = schema.properties();
   for (const propName in properties) {
@@ -40,7 +40,7 @@ function ClassFile(schemaName, schema) {
     <>
       <Text>using System;</Text>
       <Text></Text>
-      <Text>namespace Test</Text>
+      <Text>namespace {namespace}</Text>
       <Text>{'{'}</Text>
       <Indent size={1} type={IndentationTypes.SPACES}>
         <Indent size={2} type={IndentationTypes.SPACES}>
@@ -55,7 +55,7 @@ function ClassFile(schemaName, schema) {
   );
 }
 
-function EnumFile(schemaName, schema) {
+function EnumFile(schemaName, schema, namespace) {
   const enumValOutput = [];
   const enumValues = Array.from(schema.enum().values());
   const enumNames = Array.from(schema.extension('x-enumNames').values());
@@ -69,7 +69,7 @@ function EnumFile(schemaName, schema) {
   }
   return (
     <>
-      <Text>namespace Test</Text>
+      <Text>namespace {namespace}</Text>
       <Text>{'{'}</Text>
       <Indent size={1} type={IndentationTypes.SPACES}>
         <Indent size={2} type={IndentationTypes.SPACES}>

@@ -9,7 +9,12 @@ export default function({ asyncapi, params }) {
   // schemas is an instance of the Map
   return Array
     .from(schemas)
-    .filter(([schemaName, _]) => !normalizeSchemaName(schemaName).startsWith('anonymous-schema'))
+    .filter(([schemaName, schema]) => {
+      const required = schema.required();
+      return !normalizeSchemaName(schemaName).startsWith('anonymous-schema')
+      && (required === undefined || !required.some(x => x.startsWith('cloudevent:')));
+    }
+    )
     .map(([schemaName, schema]) => {
       const name = normalizeSchemaName(schemaName);
       return (

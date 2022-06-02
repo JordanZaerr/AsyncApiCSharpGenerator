@@ -32,7 +32,7 @@ function ClassFile(schemaName, schema, namespace) {
     // eslint-disable-next-line security/detect-object-injection
     const propObj = properties[propName];
     propOutput.push(
-      <Indent size={3} type={IndentationTypes.SPACES}>
+      <Indent size={4} type={IndentationTypes.SPACES}>
         <Text>public {GetType(propObj.type(), propObj.format(), propObj)} {propName} {'{ get; set; }'}</Text>
       </Indent>);
   }
@@ -42,13 +42,11 @@ function ClassFile(schemaName, schema, namespace) {
       <Text></Text>
       <Text>namespace {namespace}</Text>
       <Text>{'{'}</Text>
-      <Indent size={1} type={IndentationTypes.SPACES}>
-        <Indent size={2} type={IndentationTypes.SPACES}>
-          <Text>public class {schemaName}</Text>
-          <Text>{'{'}</Text>
-          {propOutput}
-          <Text>{'}'}</Text>
-        </Indent>
+      <Indent size={4} type={IndentationTypes.SPACES}>
+        <Text>public class {schemaName}</Text>
+        <Text>{'{'}</Text>
+        {propOutput}
+        <Text>{'}'}</Text>
       </Indent>
       <Text>{'}'}</Text>
     </>
@@ -63,7 +61,7 @@ function EnumFile(schemaName, schema, namespace) {
   const enumEntries = enumNames.map((name, i) => [name, enumValues[i]]);
   for (const [enumName, enumValue] of enumEntries) {
     enumValOutput.push(
-      <Indent size={3} type={IndentationTypes.SPACES}>
+      <Indent size={4} type={IndentationTypes.SPACES}>
         <Text>{enumName} = {String(enumValue)},</Text>
       </Indent>);
   }
@@ -71,13 +69,11 @@ function EnumFile(schemaName, schema, namespace) {
     <>
       <Text>namespace {namespace}</Text>
       <Text>{'{'}</Text>
-      <Indent size={1} type={IndentationTypes.SPACES}>
-        <Indent size={2} type={IndentationTypes.SPACES}>
-          <Text>public enum {schemaName}</Text>
-          <Text>{'{'}</Text>
-          {enumValOutput}
-          <Text>{'}'}</Text>
-        </Indent>
+      <Indent size={4} type={IndentationTypes.SPACES}>
+        <Text>public enum {schemaName}</Text>
+        <Text>{'{'}</Text>
+        {enumValOutput}
+        <Text>{'}'}</Text>
       </Indent>
       <Text>{'}'}</Text>
     </>

@@ -67,6 +67,10 @@
       "namespace": {
         "description": "Namespace for generated code files.",
         "default": "CodeGen"
+      },
+      "generateHandlers": {
+        "description": "Generates a handler class for all sub channels",
+        "default": true
       }
     },
     "nonRenderableFiles": [

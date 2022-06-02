@@ -2,7 +2,7 @@
   "name": "template-for-generator-templates",
   "version": "0.0.1",
   "description": "Template for generator templates to make it much easier to start writing your own generator template",
-  "main": "index.js",
+  "main": "models.js",
   "scripts": {
     "test": "npm run testTemplate && npm run testHooks && npm run testFilters && npm run testComponents",
     "testTemplate": "rimraf test/temp && jest --coverage -t 'templateGenerationResult'",
@@ -36,8 +36,7 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^2.1.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "@asyncapi/generator-react-sdk": "^0.2.23",
-    "puppeteer": "^5.2.1"
+    "@asyncapi/generator-react-sdk": "^0.2.23"
   },
   "release": {
     "branches": [
@@ -93,7 +92,7 @@
     }
   },
   "devDependencies": {
-    "@asyncapi/generator": "^1.9.3",
+    "@asyncapi/generator": "^1.9.5",
     "@asyncapi/parser": "^1.15.1",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
